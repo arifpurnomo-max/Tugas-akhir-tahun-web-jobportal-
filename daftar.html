@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar JobPortal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes slideIn {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        .animate-slide-in {
+            animation: slideIn 0.5s ease-out;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-r from-cyan-500 to-blue-500 min-h-screen flex items-center justify-center p-4">
+    <div class="container mx-auto px-4">
+        <div class="bg-white p-4 md:p-8 rounded-lg shadow-lg w-full max-w-md mx-auto animate-slide-in">
+            <h2 class="text-xl md:text-2xl font-bold text-center mb-4 md:mb-6">Daftar Akun</h2>
+            <form id="registerForm" class="space-y-4">
+                <div>
+                    <label for="nama" class="block text-gray-700 text-sm md:text-base mb-2">Nama Lengkap</label>
+                    <input type="text" id="nama" class="w-full px-3 py-2 text-sm md:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    <div id="nama-error" class="text-red-500 text-xs md:text-sm mt-1"></div>
+                </div>
+                <div>
+                    <label for="email" class="block text-gray-700 text-sm md:text-base mb-2">Email</label>
+                    <input type="email" id="email" class="w-full px-3 py-2 text-sm md:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    <div id="email-error" class="text-red-500 text-xs md:text-sm mt-1"></div>
+                </div>
+                <div>
+                    <label for="password" class="block text-gray-700 text-sm md:text-base mb-2">Kata Sandi</label>
+                    <input type="password" id="password" class="w-full px-3 py-2 text-sm md:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    <div id="password-error" class="text-red-500 text-xs md:text-sm mt-1"></div>
+                </div>
+                <div>
+                    <label for="confirmPassword" class="block text-gray-700 text-sm md:text-base mb-2">Konfirmasi Kata Sandi</label>
+                    <input type="password" id="confirmPassword" class="w-full px-3 py-2 text-sm md:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    <div id="confirm-password-error" class="text-red-500 text-xs md:text-sm mt-1"></div>
+                </div>
+                <button type="submit" class="w-full bg-blue-500 text-white py-2 text-sm md:text-base rounded-lg hover:bg-blue-600 transition duration-200 mt-6">Daftar</button>
+                <p class="text-center text-sm md:text-base mt-4">
+                    Sudah punya akun? <a href="login.html" class="text-blue-500 hover:text-blue-700">Masuk di sini</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        class RegisterManager {
+            constructor() {
+                this.form = document.getElementById('registerForm');
+                this.initializeEventListeners();
+            }
+
+            initializeEventListeners() {
+                this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+            }
+
+            validateName(nama) {
+                return nama.length >= 3;
+            }
+
+            validateEmail(email) {
+                const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                return re.test(email);
+            }
+
+            validatePassword(password) {
+                return password.length >= 8;
+            }
+
+            validateConfirmPassword(password, confirmPassword) {
+                return password === confirmPassword;
+            }
+
+            handleSubmit(e) {
+                e.preventDefault();
+
+                const nama = document.getElementById('nama').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const password = document.getElementById('password').value.trim();
+                const confirmPassword = document.getElementById('confirmPassword').value.trim();
+
+                const namaError = document.getElementById('nama-error');
+                const emailError = document.getElementById('email-error');
+                const passwordError = document.getElementById('password-error');
+                const confirmPasswordError = document.getElementById('confirm-password-error');
+
+                // Reset error messages
+                namaError.textContent = '';
+                emailError.textContent = '';
+                passwordError.textContent = '';
+                confirmPasswordError.textContent = '';
+
+                let isValid = true;
+
+                if (!this.validateName(nama)) {
+                    namaError.textContent = 'Nama harus minimal 3 karakter!';
+                    isValid = false;
+                }
+
+                if (!this.validateEmail(email)) {
+                    emailError.textContent = 'Format email tidak valid!';
+                    isValid = false;
+                }
+
+                if (!this.validatePassword(password)) {
+                    passwordError.textContent = 'Kata sandi harus minimal 8 karakter!';
+                    isValid = false;
+                }
+
+                if (!this.validateConfirmPassword(password, confirmPassword)) {
+                    confirmPasswordError.textContent = 'Konfirmasi kata sandi tidak cocok!';
+                    isValid = false;
+                }
+
+                if (isValid) {
+                    // Cek apakah email sudah terdaftar
+                    const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+                    const existingUser = registeredUsers.find(user => user.email === email);
+
+                    if (existingUser) {
+                        emailError.textContent = 'Email sudah terdaftar!';
+                        return;
+                    }
+
+                    // Simpan data pengguna ke localStorage dengan key yang sama seperti di login.html
+                    const newUser = {
+                        nama: nama,
+                        email: email,
+                        password: password
+                    };
+                    registeredUsers.push(newUser);
+                    localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+                    
+                    alert('Pendaftaran berhasil! Silakan login.');
+                    window.location.href = 'login.html';
+                }
+            }
+        }
+
+        const registerManager = new RegisterManager();
+    </script>
+</body>
+</html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Lowongan Kerja</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .animate-slide-in {
+            animation: slideIn 0.5s ease-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+<!-- Header -->
+<nav class="bg-white fixed w-full shadow-sm z-50 animate-fade-in">
+    <div class="container mx-auto px-4">
+        <div class="flex justify-between items-center h-16">
+            <a href="#" class="text-xl font-bold">JobPortal</a>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex space-x-4">
+                <a href="#home" class="text-gray-600 hover:text-gray-900">Beranda</a>
+                <a href="lowongan.html" class="text-gray-600 hover:text-gray-900">Lowongan</a>
+                <a href="#companies" class="text-gray-600 hover:text-gray-900">Perusahaan</a>
+                <a href="#career" class="text-gray-600 hover:text-gray-900">Tips Karir</a>
+                <a href="login.html" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Masuk/Daftar</a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden" id="mobileMenuBtn">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="md:hidden hidden" id="mobileMenu">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="#home" class="block text-gray-600 hover:text-gray-900 py-2">Beranda</a>
+                <a href="lowongan.html" class="block text-gray-600 hover:text-gray-900 py-2">Lowongan</a>
+                <a href="#companies" class="block text-gray-600 hover:text-gray-900 py-2">Perusahaan</a>
+                <a href="#career" class="block text-gray-600 hover:text-gray-900 py-2">Tips Karir</a>
+                <a href="login.html" class="block bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 text-center">Masuk/Daftar</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="bg-gradient-to-r from-cyan-500 to-blue-500 text-white py-16 md:py-32 animate-fade-in">
+    <div class="container mx-auto px-4">
+        <h1 class="text-2xl md:text-4xl font-bold text-center mb-8">Temukan Karir Impian Anda!</h1>
+        <div class="bg-white/95 p-4 md:p-6 rounded-lg shadow-lg max-w-4xl mx-auto">
+            <form class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <input type="text" placeholder="Posisi atau Kata Kunci" class="p-2 border rounded-lg text-black">
+                <select class="p-2 border rounded-lg text-black">
+                    <option>Lokasi</option>
+                    <option>Jakarta</option>
+                    <option>Bandung</option>
+                    <option>Surabaya</option>
+                </select>
+                <select class="p-2 border rounded-lg text-black">
+                    <option>Jenis Pekerjaan</option>
+                    <option>Full-time</option>
+                    <option>Part-time</option>
+                    <option>Remote</option>
+                </select>
+                <button class="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600">Cari</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- Job Listings -->
+<section class="py-6 md:py-16 animate-slide-in">
+    <div class="container mx-auto px-4">
+        <h2 class="text-xl md:text-2xl font-bold mb-4 md:mb-8">Lowongan Terbaru</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-6" id="jobList">
+            <!-- Job cards will be dynamically inserted here -->
+        </div>
+    </div>
+</section>
+
+<!-- Saved Jobs Section -->
+<section class="py-6 md:py-16 bg-gray-50 animate-slide-in">
+    <div class="container mx-auto px-4">
+        <h2 class="text-xl md:text-2xl font-bold mb-4 md:mb-8">Pekerjaan yang Disimpan</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-6" id="savedJobs">
+            <!-- Saved job cards will be dynamically inserted here -->
+        </div>
+    </div>
+</section>
+
+<script>
+class JobPortal {
+    constructor() {
+        this.jobs = [];
+        this.savedJobs = this.getSavedJobs();
+        this.init();
+        this.initMobileMenu();
+    }
+
+    initMobileMenu() {
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    }
+
+    init() {
+        this.loadJobs();
+        this.renderSavedJobs();
+    }
+
+    loadJobs() {
+        this.jobs = [
+            {id: 1, title: "Software Engineer", company: "Tech Corp", location: "Jakarta", salary: "Rp 15-20 juta", type: "Full-time" },
+            {id: 2, title: "UI/UX Designer", company: "Creative Studio", location: "Bandung", salary: "Rp 10-15 juta", type: "Full-time" },
+            {id: 3, title: "Digital Marketing Manager", company: "E-Commerce Plus", location: "Jakarta", salary: "Rp 12-18 juta", type: "Full-time" },
+            {id: 4, title: "Data Analyst", company: "Data Insights Corp", location: "Surabaya", salary: "Rp 8-12 juta", type: "Remote" },
+            {id: 5, title: "Content Writer", company: "Media Group",location: "Jakarta", salary: "Rp 6-9 juta", type: "Part-time"},
+            {id: 6, title: "Product Manager", company: "Innovation Tech", location: "Bandung", salary: "Rp 20-25 juta", type: "Full-time"},
+            {id: 7, title: "HR Specialist", company: "Global Solutions", location: "Jakarta", salary: "Rp 8-12 juta",type: "Full-time"},
+            {id: 8, title: "Frontend Developer", company: "Web Solutions", location: "Surabaya", salary: "Rp 10-15 juta", type: "Remote"},
+            {id: 9, title: "Business Analyst", company: "Consulting Group", location: "Jakarta", salary: "Rp 15-20 juta",type: "Full-time"}
+        ];
+        
+        this.renderJobs();
+    }
+
+    renderJobs() {
+        const jobList = document.getElementById('jobList');
+        jobList.innerHTML = '';
+
+        this.jobs.forEach(job => {
+            const jobCard = `
+                <div class="bg-white rounded-lg shadow-md hover:-translate-y-1 transition-transform duration-300 relative animate-fade-in">
+                    <div class="p-4 md:p-6">
+                        <h5 class="text-lg md:text-xl font-bold mb-2">${job.title}</h5>
+                        <h6 class="text-gray-600 mb-4">${job.company}</h6>
+                        <p class="text-gray-700 space-y-2">
+                            <div><i class="fas fa-map-marker-alt"></i> ${job.location}</div>
+                            <div><i class="fas fa-money-bill"></i> ${job.salary}</div>
+                            <div><i class="fas fa-clock"></i> ${job.type}</div>
+                        </p>
+                        <button onclick="jobPortal.saveJob(${job.id})" 
+                                class="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full md:w-auto">
+                            Simpan
+                        </button>
+                    </div>
+                </div>
+            `;
+            jobList.insertAdjacentHTML('beforeend', jobCard);
+        });
+    }
+
+    renderSavedJobs() {
+        const savedJobsContainer = document.getElementById('savedJobs');
+        savedJobsContainer.innerHTML = '';
+
+        const savedJobs = this.jobs.filter(job => this.savedJobs.includes(job.id));
+        savedJobs.forEach(job => {
+            const jobCard = `
+                <div class="bg-white rounded-lg shadow-md hover:-translate-y-1 transition-transform duration-300 relative animate-fade-in">
+                    <div class="p-4 md:p-6">
+                        <h5 class="text-lg md:text-xl font-bold mb-2">${job.title}</h5>
+                        <h6 class="text-gray-600 mb-4">${job.company}</h6>
+                        <p class="text-gray-700 space-y-2">
+                            <div><i class="fas fa-map-marker-alt"></i> ${job.location}</div>
+                            <div><i class="fas fa-money-bill"></i> ${job.salary}</div>
+                            <div><i class="fas fa-clock"></i> ${job.type}</div>
+                        </p>
+                        <button onclick="jobPortal.removeJob(${job.id})" 
+                                class="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 w-full md:w-auto">
+                            Hapus
+                        </button>
+                    </div>
+                </div>
+            `;
+            savedJobsContainer.insertAdjacentHTML('beforeend', jobCard);
+        });
+    }
+
+    saveJob(jobId) {
+        if (!this.savedJobs.includes(jobId)) {
+            this.savedJobs.push(jobId);
+            localStorage.setItem('savedJobs', JSON.stringify(this.savedJobs));
+            alert('Pekerjaan berhasil disimpan!');
+            this.renderSavedJobs();
+        }
+    }
+
+    removeJob(jobId) {
+        this.savedJobs = this.savedJobs.filter(id => id !== jobId);
+        localStorage.setItem('savedJobs', JSON.stringify(this.savedJobs));
+        this.renderSavedJobs();
+    }
+
+    getSavedJobs() {
+        const saved = localStorage.getItem('savedJobs');
+        return saved ? JSON.parse(saved) : [];
+    }
+}
+
+const jobPortal = new JobPortal();
+</script>
+
+</body>
+</html>
