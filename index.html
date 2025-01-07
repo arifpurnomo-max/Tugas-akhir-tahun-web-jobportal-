@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal Lowongan Kerja</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
         @keyframes fadeIn {
             from {
@@ -55,7 +56,7 @@
             </div>
 
             <!-- Mobile Menu Button -->
-            <button class="md:hidden" id="mobileMenuBtn">
+            <button class="md:hidden" id="mobileMenuBtn" aria-label="Toggle Mobile Menu">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                 </svg>
@@ -80,21 +81,21 @@
     <div class="container mx-auto px-4">
         <h1 class="text-2xl md:text-4xl font-bold text-center mb-8">Temukan Karir Impian Anda!</h1>
         <div class="bg-white/95 p-4 md:p-6 rounded-lg shadow-lg max-w-4xl mx-auto">
-            <form class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <input type="text" placeholder="Posisi atau Kata Kunci" class="p-2 border rounded-lg text-black">
-                <select class="p-2 border rounded-lg text-black">
+            <form id="searchForm" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <input type="text" id="keyword" placeholder="Posisi atau Kata Kunci" class="p-2 border rounded-lg text-black">
+                <select id="location" class="p-2 border rounded-lg text-black">
                     <option>Lokasi</option>
                     <option>Jakarta</option>
                     <option>Bandung</option>
                     <option>Surabaya</option>
                 </select>
-                <select class="p-2 border rounded-lg text-black">
+                <select id="jobType" class="p-2 border rounded-lg text-black">
                     <option>Jenis Pekerjaan</option>
                     <option>Full-time</option>
                     <option>Part-time</option>
                     <option>Remote</option>
                 </select>
-                <button class="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600">Cari</button>
+                <button type="submit" class="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600">Cari</button>
             </form>
         </div>
     </div>
@@ -141,6 +142,13 @@ class JobPortal {
     init() {
         this.loadJobs();
         this.renderSavedJobs();
+        document.getElementById('searchForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const keyword = document.getElementById('keyword').value;
+            const location = document.getElementById('location').value;
+            const jobType = document.getElementById('jobType').value;
+            this.filterAndRenderJobs(keyword, location, jobType);
+        });
     }
 
     loadJobs() {
@@ -156,14 +164,14 @@ class JobPortal {
             {id: 9, title: "Business Analyst", company: "Consulting Group", location: "Jakarta", salary: "Rp 15-20 juta",type: "Full-time"}
         ];
         
-        this.renderJobs();
+        this.renderJobs(this.jobs);
     }
 
-    renderJobs() {
+    renderJobs(filteredJobs) {
         const jobList = document.getElementById('jobList');
         jobList.innerHTML = '';
 
-        this.jobs.forEach(job => {
+        filteredJobs.forEach(job => {
             const jobCard = `
                 <div class="bg-white rounded-lg shadow-md hover:-translate-y-1 transition-transform duration-300 relative animate-fade-in">
                     <div class="p-4 md:p-6">
@@ -215,7 +223,7 @@ class JobPortal {
     saveJob(jobId) {
         if (!this.savedJobs.includes(jobId)) {
             this.savedJobs.push(jobId);
-            localStorage.setItem('savedJobs', JSON.stringify(this.savedJobs));
+            this.updateSavedJobs();
             alert('Pekerjaan berhasil disimpan!');
             this.renderSavedJobs();
         }
@@ -223,13 +231,27 @@ class JobPortal {
 
     removeJob(jobId) {
         this.savedJobs = this.savedJobs.filter(id => id !== jobId);
-        localStorage.setItem('savedJobs', JSON.stringify(this.savedJobs));
+        this.updateSavedJobs();
         this.renderSavedJobs();
     }
 
+    updateSavedJobs() {
+        localStorage.setItem('savedJobs', JSON.stringify(this.savedJobs));
+    }
     getSavedJobs() {
-        const saved = localStorage.getItem('savedJobs');
-        return saved ? JSON.parse(saved) : [];
+        return JSON.parse(localStorage.getItem('savedJobs')) || [];
+    }
+
+    filterAndRenderJobs(keyword, location, jobType) {
+        const filteredJobs = this.jobs.filter(job => {
+            return (
+                (!keyword || job.title.toLowerCase().includes(keyword.toLowerCase())) &&
+                (location === 'Lokasi' || job.location === location) &&
+                (jobType === 'Jenis Pekerjaan' || job.type === jobType)
+            );
+        });
+
+        this.renderJobs(filteredJobs);
     }
 }
 
