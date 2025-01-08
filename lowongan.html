@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Lowongan Pekerjaan</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+
+<div class="container mx-auto my-10 px-4">
+    <a href="index.html" class="inline-block text-white bg-gray-500 hover:bg-gray-600 px-4 py-2 rounded-md mb-5">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+        Kembali ke Daftar Lowongan
+    </a>
+    <div id="jobContainer" class="space-y-6">
+        <!-- Job cards will be inserted here dynamically -->
+    </div>
+</div>
+
+<script>
+    // Daftar pekerjaan
+    const jobList = [
+        {
+            id: 1,
+            title: "Software Engineer",
+            company: "Tech Corp",
+            location: "Jakarta",
+            salary: "Rp 15-20 juta",
+            type: "Full-time",
+            description: "Kami mencari seorang Software Engineer yang berpengalaman dalam mengembangkan aplikasi web modern.",
+            qualifications: [
+                "Minimal gelar S1 di bidang Teknik Informatika atau sejenisnya.",
+                "Pengalaman minimal 2 tahun dalam pengembangan perangkat lunak.",
+                "Familiar dengan bahasa pemrograman seperti JavaScript, Python, atau Java.",
+                "Mampu bekerja secara tim dan memiliki komunikasi yang baik."
+            ]
+        },
+        {
+            id: 2,
+            title: "UI/UX Designer",
+            company: "Creative Studio",
+            location: "Bandung",
+            salary: "Rp 10-15 juta",
+            type: "Full-time",
+            description: "Mencari desainer berbakat untuk merancang pengalaman pengguna yang intuitif dan menarik.",
+            qualifications: [
+                "Pengalaman minimal 2 tahun di bidang UI/UX design.",
+                "Menguasai alat desain seperti Figma atau Adobe XD.",
+                "Kemampuan dalam menciptakan prototipe interaktif.",
+                "Pemahaman tentang prinsip desain responsif."
+            ]
+        },
+        {
+            id: 3,
+            title: "Digital Marketing Manager",
+            company: "E-commerce plus",
+            location: "jakarta",
+            salary: "Rp 8-12 juta",
+            type: "Full-time",
+            description: "Meningkatkan kehadiran online perusahaan melalui strategi pemasaran digital.",
+            qualifications: [
+                "Pengalaman minimal 3 tahun dalam pemasaran digital.",
+                "Menguasai SEO, SEM, dan strategi media sosial.",
+                "Kemampuan analisis data menggunakan Google Analytics.",
+                "Kreatif dan inovatif dalam membuat konten pemasaran."
+            ]
+        },
+        {
+            id: 4,
+            title: "Data Analyst",
+            company: "Data Insights corp",
+            location: "surabaya",
+            salary: "Rp 8-12 juta",
+            type: "Remote",
+            description: "Mengolah dan menganalisis data untuk memberikan wawasan bisnis yang bermakna.",
+            qualifications: [
+                "Minimal gelar S1 di bidang Statistik atau Matematika.",
+                "Pengalaman minimal 2 tahun sebagai Data Analyst.",
+                "Menguasai alat analitik seperti Python, R, atau SQL.",
+                "Kemampuan visualisasi data menggunakan Tableau atau Power BI."
+            ]
+        },
+        {
+            id: 5,
+            title: "Content Writer",
+            company: "Media Group",
+            location: "Jakarta",
+            salary: "Rp 6-9 juta",
+            type: "Part-time",
+            description: "Mencari penulis konten kreatif untuk menghasilkan artikel berkualitas tinggi.",
+            qualifications: [
+                "Pengalaman minimal 1 tahun sebagai Content Writer.",
+                "Kemampuan menulis dalam berbagai gaya dan format.",
+                "Familiar dengan SEO dan optimasi konten.",
+                "Kreatif dan mampu bekerja dalam tenggat waktu."
+            ]
+        },
+        {
+            id: 6,
+            title: "Product Manager",
+            company: "Innovation Tech",
+            location: "Bandung",
+            salary: "Rp 20-25 juta",
+            type: "Full-time",
+            description: "Memimpin pengembangan produk dari konsep hingga peluncuran.",
+            qualifications: [
+                "Minimal gelar S1 di bidang Manajemen atau Teknik.",
+                "Pengalaman minimal 3 tahun sebagai Product Manager.",
+                "Pemahaman tentang siklus hidup produk.",
+                "Kemampuan analitis dan komunikasi yang baik."
+            ]
+        },
+        {
+            id: 7,
+            title: "HR Specialist",
+            company: "Global Solutions",
+            location: "Jakarta",
+            salary: "Rp 8-12 juta",
+            type: "Full-time",
+            description: "Mengelola rekrutmen, pengembangan karyawan, dan administrasi HR.",
+            qualifications: [
+                "Minimal gelar S1 di bidang Manajemen atau Psikologi.",
+                "Pengalaman minimal 2 tahun di bidang HR.",
+                "Menguasai proses rekrutmen dan pelatihan.",
+                "Kemampuan komunikasi dan interpersonal yang baik."
+            ]
+        },
+        {
+            id: 8,
+            title: "Frontend Developer",
+            company: "Web Solutions",
+            location: "Surabaya",
+            salary: "Rp 10-15 juta",
+            type: "Remote",
+            description: "Mengembangkan antarmuka web yang responsif dan user-friendly.",
+            qualifications: [
+                "Pengalaman minimal 2 tahun dalam pengembangan frontend.",
+                "Menguasai HTML, CSS, dan JavaScript.",
+                "Familiar dengan framework seperti React atau Vue.js.",
+                "Kemampuan debugging dan optimasi performa."
+            ]
+        },
+        {
+            id: 9,
+            title: "Business Analyst",
+            company: "Consulting Group",
+            location: "Jakarta",
+            salary: "Rp 15-20 juta",
+            type: "Full-time",
+            description: "Menganalisis kebutuhan bisnis dan memberikan solusi yang efisien.",
+            qualifications: [
+                "Minimal gelar S1 di bidang Manajemen atau Teknologi Informasi.",
+                "Pengalaman minimal 2 tahun sebagai Business Analyst.",
+                "Kemampuan analisis data dan pemecahan masalah.",
+                "Komunikasi yang baik dengan pemangku kepentingan."
+            ]
+        }
+    ];
+
+    // Fungsi untuk membuat kartu pekerjaan
+    function createJobCard(job) {
+        const card = document.createElement('div');
+        card.className = 'bg-white shadow-md rounded-lg p-6';
+
+        card.innerHTML = `
+            <h1 class="text-xl font-semibold mb-3">${job.title}</h1>
+            <h2 class="text-sm text-gray-500 mb-4">${job.company}</h2>
+            <p class="text-gray-700 mb-4">
+                <strong>Lokasi:</strong> ${job.location}<br>
+                <strong>Gaji:</strong> ${job.salary}<br>
+                <strong>Jenis Pekerjaan:</strong> ${job.type}
+            </p>
+            <hr class="my-4">
+            <h3 class="text-lg font-medium mb-2">Deskripsi Pekerjaan</h3>
+            <p class="text-gray-600 mb-4">${job.description}</p>
+            <h3 class="text-lg font-medium mb-2">Kualifikasi</h3>
+            <ul class="list-disc list-inside text-gray-600 mb-4">
+                ${job.qualifications.map(qual => `<li>${qual}</li>`).join('')}
+            </ul>
+            <button class="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600" onclick="applyForJob('${job.title}')">Lamar Sekarang</button>
+        `;
+
+        return card;
+    }
+
+    // Fungsi untuk melamar pekerjaan
+    function applyForJob(jobTitle) {
+        alert(`Terima kasih! Anda telah melamar untuk posisi ${jobTitle}.`);
+    }
+
+    // Memasukkan semua pekerjaan ke dalam container
+    const jobContainer = document.getElementById('jobContainer');
+    jobList.forEach(job => {
+        const jobCard = createJobCard(job);
+        jobContainer.appendChild(jobCard);
+    });
+</script>
+
+</body>
+</html>

@@ -48,7 +48,7 @@
             
             <!-- Desktop Menu -->
             <div class="hidden md:flex space-x-4">
-                <a href="#home" class="text-gray-600 hover:text-gray-900">Beranda</a>
+                <a href="index.html" class="text-gray-600 hover:text-gray-900">Beranda</a>
                 <a href="lowongan.html" class="text-gray-600 hover:text-gray-900">Lowongan</a>
                 <a href="#companies" class="text-gray-600 hover:text-gray-900">Perusahaan</a>
                 <a href="#career" class="text-gray-600 hover:text-gray-900">Tips Karir</a>
@@ -66,7 +66,7 @@
         <!-- Mobile Menu -->
         <div class="md:hidden hidden" id="mobileMenu">
             <div class="px-2 pt-2 pb-3 space-y-1">
-                <a href="#home" class="block text-gray-600 hover:text-gray-900 py-2">Beranda</a>
+                <a href="index.html" class="block text-gray-600 hover:text-gray-900 py-2">Beranda</a>
                 <a href="lowongan.html" class="block text-gray-600 hover:text-gray-900 py-2">Lowongan</a>
                 <a href="#companies" class="block text-gray-600 hover:text-gray-900 py-2">Perusahaan</a>
                 <a href="#career" class="block text-gray-600 hover:text-gray-900 py-2">Tips Karir</a>
@@ -111,21 +111,10 @@
     </div>
 </section>
 
-<!-- Saved Jobs Section -->
-<section class="py-6 md:py-16 bg-gray-50 animate-slide-in">
-    <div class="container mx-auto px-4">
-        <h2 class="text-xl md:text-2xl font-bold mb-4 md:mb-8">Pekerjaan yang Disimpan</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-6" id="savedJobs">
-            <!-- Saved job cards will be dynamically inserted here -->
-        </div>
-    </div>
-</section>
-
 <script>
 class JobPortal {
     constructor() {
         this.jobs = [];
-        this.savedJobs = this.getSavedJobs();
         this.init();
         this.initMobileMenu();
     }
@@ -141,7 +130,6 @@ class JobPortal {
 
     init() {
         this.loadJobs();
-        this.renderSavedJobs();
         document.getElementById('searchForm').addEventListener('submit', (e) => {
             e.preventDefault();
             const keyword = document.getElementById('keyword').value;
@@ -182,66 +170,16 @@ class JobPortal {
                             <div><i class="fas fa-money-bill"></i> ${job.salary}</div>
                             <div><i class="fas fa-clock"></i> ${job.type}</div>
                         </p>
-                        <button onclick="jobPortal.saveJob(${job.id})" 
-                                class="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full md:w-auto">
-                            Simpan
-                        </button>
+                        <a href="lowongan.html" "id=${job.id}" 
+                           class="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full md:w-auto inline-block text-center">
+                            Lihat Detail
+                        </a>
                     </div>
                 </div>
             `;
             jobList.insertAdjacentHTML('beforeend', jobCard);
         });
     }
-
-    renderSavedJobs() {
-        const savedJobsContainer = document.getElementById('savedJobs');
-        savedJobsContainer.innerHTML = '';
-
-        const savedJobs = this.jobs.filter(job => this.savedJobs.includes(job.id));
-        savedJobs.forEach(job => {
-            const jobCard = `
-                <div class="bg-white rounded-lg shadow-md hover:-translate-y-1 transition-transform duration-300 relative animate-fade-in">
-                    <div class="p-4 md:p-6">
-                        <h5 class="text-lg md:text-xl font-bold mb-2">${job.title}</h5>
-                        <h6 class="text-gray-600 mb-4">${job.company}</h6>
-                        <p class="text-gray-700 space-y-2">
-                            <div><i class="fas fa-map-marker-alt"></i> ${job.location}</div>
-                            <div><i class="fas fa-money-bill"></i> ${job.salary}</div>
-                            <div><i class="fas fa-clock"></i> ${job.type}</div>
-                        </p>
-                        <button onclick="jobPortal.removeJob(${job.id})" 
-                                class="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 w-full md:w-auto">
-                            Hapus
-                        </button>
-                    </div>
-                </div>
-            `;
-            savedJobsContainer.insertAdjacentHTML('beforeend', jobCard);
-        });
-    }
-
-    saveJob(jobId) {
-        if (!this.savedJobs.includes(jobId)) {
-            this.savedJobs.push(jobId);
-            this.updateSavedJobs();
-            alert('Pekerjaan berhasil disimpan!');
-            this.renderSavedJobs();
-        }
-    }
-
-    removeJob(jobId) {
-        this.savedJobs = this.savedJobs.filter(id => id !== jobId);
-        this.updateSavedJobs();
-        this.renderSavedJobs();
-    }
-
-    updateSavedJobs() {
-        localStorage.setItem('savedJobs', JSON.stringify(this.savedJobs));
-    }
-    getSavedJobs() {
-        return JSON.parse(localStorage.getItem('savedJobs')) || [];
-    }
-
     filterAndRenderJobs(keyword, location, jobType) {
         const filteredJobs = this.jobs.filter(job => {
             return (
