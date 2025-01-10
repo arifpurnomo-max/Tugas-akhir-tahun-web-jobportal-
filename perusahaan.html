@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perusahaan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+
+<div class="container mx-auto my-10 px-4">
+    <a href="index.html" class="inline-block text-white bg-gray-500 hover:bg-gray-600 px-4 py-2 rounded-md mb-5">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+        Kembali ke Beranda
+    </a>
+    <div id="companyContainer" class="space-y-6">
+        <!-- Company cards will be inserted here dynamically -->
+    </div>
+</div>
+
+<script>
+    // Daftar perusahaan
+    const companyList = [
+        {
+            id: 1,
+            name: "Tech Corp",
+            location: "Jakarta",
+            description: "Perusahaan teknologi terkemuka yang berfokus pada pengembangan perangkat lunak.",
+            website: "https://www.techcorp.com"
+        },
+        {
+            id: 2,
+            name: "Creative Studio",
+            location: "Bandung",
+            description: "Studio kreatif yang berfokus pada desain UI/UX.",
+            website: "https://www.creativestudio.com"
+        },
+        {
+            id: 3,
+            name: "Digital Agency",
+            location: "Surabaya",
+            description: "Agen digital yang menyediakan layanan pemasaran online.",
+            website: "https://www.digitalagency.com"
+        },
+        {
+            id: 4,
+            name: "E-commerce Solutions",
+            location: "Semarang",
+            description: "Solusi e-commerce yang membantu bisnis online.",
+            website: "https://www.ecommercesolutions.com"
+        },
+        {
+            id: 5,
+            name: "Financial Services",
+            location: "Yogyakarta",
+            description: "Layanan keuangan yang menyediakan solusi keuangan terbaik.",
+            website: "https://www.financialservices.com"
+        },
+        {
+            id: 6,
+            name: "Healthcare Solutions",
+            location: "Medan",
+            description: "Solusi kesehatan yang menyediakan layanan kesehatan terbaik.",
+            website: "https://www.healthcaresolutions.com"
+        },
+        {
+            id: 7,
+            name: "Logistics Company",
+            location: "Makassar",
+            description: "Perusahaan logistik yang menyediakan layanan pengiriman terbaik.",
+            website: "https://www.logisticscompany.com"
+        },
+        {
+            id: 8,
+            name: "Manufacturing Company",
+            location: "Palembang",
+            description: "Perusahaan manufaktur yang menyediakan produk berkualitas.",
+            website: "https://www.manufacturingcompany.com"
+        },
+        {
+            id: 9,
+            name: "Real Estate Agency",
+            location: "Bali",
+            description: "Agen real estat yang menyediakan properti terbaik.",
+            website: "https://www.realestateagency.com"
+        }
+    ];
+
+    const companyContainer = document.getElementById('companyContainer');
+    companyList.forEach(company => {
+        const companyCard = `
+            <div class="bg-white rounded-lg shadow-md hover:-translate-y-1 transition-transform duration-300 relative animate-fade-in">
+                <div class="p-4 md:p-6">
+                    <h5 class="text-lg md:text-xl font-bold mb-2">${company.name}</h5>
+                    <h6 class="text-gray-600 mb-4">${company.location}</h6>
+                    <p class="text-gray-700">${company.description}</p>
+                    <a href="${company.website}" class="text-blue-500 hover:text-blue-700">Kunjungi Website</a>
+                </div>
+            </div>
+        `;
+        companyContainer.insertAdjacentHTML('beforeend', companyCard);
+    });
+</script>
+
+</body>
+</html>
+
+
+
