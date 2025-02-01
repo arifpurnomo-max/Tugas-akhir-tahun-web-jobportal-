@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar JobPortal</title>
+    <title>Daftar JobPortal Islami</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="islamic-theme.css" rel="stylesheet">
     <style>
         @keyframes slideIn {
             from {
@@ -19,36 +21,73 @@
         .animate-slide-in {
             animation: slideIn 0.5s ease-out;
         }
+
+        .arabesque-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230D4B3E' fill-opacity='0.05'%3E%3Cpath d='M0 0h40v40H0V0zm40 40h40v40H40V40zm0-40h2l-2 2V0zm0 4l4-4h2l-6 6V4zm0 4l8-8h2L40 10V8zm0 4L52 0h2L40 14v-2zm0 4L56 0h2L40 18v-2zm0 4L60 0h2L40 22v-2zm0 4L64 0h2L40 26v-2zm0 4L68 0h2L40 30v-2zm0 4L72 0h2L40 34v-2zm0 4L76 0h2L40 38v-2zm0 4L80 0v2L42 40h-2zm4 0L80 4v2L46 40h-2zm4 0L80 8v2L50 40h-2zm4 0l28-28v2L54 40h-2zm4 0l24-24v2L58 40h-2zm4 0l20-20v2L62 40h-2zm4 0l16-16v2L66 40h-2zm4 0l12-12v2L70 40h-2zm4 0l8-8v2l-6 6h-2zm4 0l4-4v2l-2 2h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+        }
     </style>
 </head>
-<body class="bg-gradient-to-r from-green-300 to-green-500 min-h-screen flex items-center justify-center p-4">
-    <div class="container mx-auto px-4">
-        <div class="bg-white p-4 md:p-8 rounded-lg shadow-lg w-full max-w-md mx-auto animate-slide-in">
-            <h2 class="text-xl md:text-2xl font-bold text-center mb-4 md:mb-6">Daftar Akun</h2>
-            <form id="registerForm" class="space-y-4">
+<body class="islamic-bg-main min-h-screen flex items-center justify-center p-4 relative">
+    <div class="arabesque-pattern"></div>
+    
+    <div class="container mx-auto px-4 relative z-10">
+        <div class="islamic-card islamic-frame max-w-md mx-auto animate-slide-in">
+            <div class="islamic-header mb-6">
+                <h2 class="text-[var(--primary-color)] text-3xl font-bold">Daftar Akun</h2>
+                <p class="text-[var(--secondary-color)] mt-2">Bergabunglah dengan Komunitas Kami</p>
+            </div>
+
+            <form id="registerForm" class="space-y-6">
                 <div>
-                    <label for="nama" class="block text-gray-700 text-sm md:text-base mb-2">Nama Lengkap</label>
-                    <input type="text" id="nama" class="w-full px-3 py-2 text-sm md:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                    <div id="nama-error" class="text-red-500 text-xs md:text-sm mt-1"></div>
+                    <label for="nama" class="block text-[var(--primary-color)] mb-2">
+                        <i class="fas fa-user text-[var(--accent-color)] mr-2"></i>Nama Lengkap
+                    </label>
+                    <input type="text" id="nama" class="islamic-input w-full" required>
+                    <div id="nama-error" class="text-red-500 text-sm mt-1"></div>
                 </div>
+
                 <div>
-                    <label for="email" class="block text-gray-700 text-sm md:text-base mb-2">Email</label>
-                    <input type="email" id="email" class="w-full px-3 py-2 text-sm md:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                    <div id="email-error" class="text-red-500 text-xs md:text-sm mt-1"></div>
+                    <label for="email" class="block text-[var(--primary-color)] mb-2">
+                        <i class="fas fa-envelope text-[var(--accent-color)] mr-2"></i>Email
+                    </label>
+                    <input type="email" id="email" class="islamic-input w-full" required>
+                    <div id="email-error" class="text-red-500 text-sm mt-1"></div>
                 </div>
+
                 <div>
-                    <label for="password" class="block text-gray-700 text-sm md:text-base mb-2">Kata Sandi</label>
-                    <input type="password" id="password" class="w-full px-3 py-2 text-sm md:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                    <div id="password-error" class="text-red-500 text-xs md:text-sm mt-1"></div>
+                    <label for="password" class="block text-[var(--primary-color)] mb-2">
+                        <i class="fas fa-lock text-[var(--accent-color)] mr-2"></i>Kata Sandi
+                    </label>
+                    <input type="password" id="password" class="islamic-input w-full" required>
+                    <div id="password-error" class="text-red-500 text-sm mt-1"></div>
                 </div>
+
                 <div>
-                    <label for="confirmPassword" class="block text-gray-700 text-sm md:text-base mb-2">Konfirmasi Kata Sandi</label>
-                    <input type="password" id="confirmPassword" class="w-full px-3 py-2 text-sm md:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                    <div id="confirm-password-error" class="text-red-500 text-xs md:text-sm mt-1"></div>
+                    <label for="confirmPassword" class="block text-[var(--primary-color)] mb-2">
+                        <i class="fas fa-shield-alt text-[var(--accent-color)] mr-2"></i>Konfirmasi Kata Sandi
+                    </label>
+                    <input type="password" id="confirmPassword" class="islamic-input w-full" required>
+                    <div id="confirm-password-error" class="text-red-500 text-sm mt-1"></div>
                 </div>
-                <button type="submit" class="w-full bg-green-500 text-white py-2 text-sm md:text-base rounded-lg hover:bg-green-600 transition duration-200 mt-6">Daftar</button>
-                <p class="text-center text-sm md:text-base mt-4">
-                    Sudah punya akun? <a href="login.html" class="text-green-500 hover:text-green-700">Masuk di sini</a>
+
+                <button type="submit" class="islamic-button w-full flex items-center justify-center">
+                    <i class="fas fa-user-plus mr-2"></i>Daftar
+                </button>
+
+                <div class="islamic-divider"></div>
+
+                <p class="text-center text-[var(--primary-color)]">
+                    Sudah punya akun? 
+                    <a href="login.html" class="text-[var(--secondary-color)] hover:text-[var(--primary-color)]">
+                        <i class="fas fa-sign-in-alt mr-1"></i>Masuk di sini
+                    </a>
                 </p>
             </form>
         </div>

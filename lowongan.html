@@ -3,24 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detail Lowongan Pekerjaan</title>
-
-    <!-- Tailwind CSS -->
+    <title>Detail Lowongan Pekerjaan Islami</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="islamic-theme.css" rel="stylesheet">
+    <style>
+        .geometric-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%230D4B3E' fill-opacity='0.03'%3E%3Cpath d='M50 0l25 25-25 25-25-25zm0 50l25 25-25 25-25-25zm25-25l25 25-25 25-25-25zm-50 0l25 25-25 25-25-25z'/%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
 </head>
-<body class="bg-gray-100">
+<body class="islamic-bg-main min-h-screen">
+    <div class="geometric-pattern"></div>
 
-<div class="container mx-auto my-10 px-4">
-    <a href="index.html" class="inline-block text-white bg-gray-500 hover:bg-gray-600 px-4 py-2 rounded-md mb-5">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
-        </svg>
-        Kembali ke Daftar Lowongan
-    </a>
-    <div id="jobContainer" class="space-y-6">
-        <!-- Job cards will be inserted here dynamically -->
+    <div class="container mx-auto my-10 px-4 relative z-10">
+        <a href="index.html" class="islamic-button inline-flex items-center mb-8">
+            <i class="fas fa-arrow-left mr-2"></i>
+            Kembali ke Daftar Lowongan
+        </a>
+        <div id="jobContainer" class="space-y-8">
+            <!-- Job cards will be inserted here dynamically -->
+        </div>
     </div>
-</div>
 
 <script>
     // Daftar pekerjaan
@@ -164,42 +175,66 @@
         }
     ];
 
-    // Fungsi untuk membuat kartu pekerjaan
     function createJobCard(job) {
-        const card = document.createElement('div');
-        card.className = 'bg-white shadow-md rounded-lg p-6';
+        return `
+            <div class="islamic-card islamic-frame">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-[var(--primary-color)] mb-2">${job.title}</h2>
+                    <div class="text-[var(--secondary-color)] text-lg mb-4">${job.company}</div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                        <div class="flex items-center">
+                            <i class="fas fa-map-marker-alt text-[var(--accent-color)] w-6"></i>
+                            <span>${job.location}</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-money-bill text-[var(--accent-color)] w-6"></i>
+                            <span>${job.salary}</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-clock text-[var(--accent-color)] w-6"></i>
+                            <span>${job.type}</span>
+                        </div>
+                    </div>
 
-        card.innerHTML = `
-            <h1 class="text-xl font-semibold mb-3">${job.title}</h1>
-            <h2 class="text-sm text-gray-500 mb-4">${job.company}</h2>
-            <p class="text-gray-700 mb-4">
-                <strong>Lokasi:</strong> ${job.location}<br>
-                <strong>Gaji:</strong> ${job.salary}<br>
-                <strong>Jenis Pekerjaan:</strong> ${job.type}
-            </p>
-            <hr class="my-4">
-            <h3 class="text-lg font-medium mb-2">Deskripsi Pekerjaan</h3>
-            <p class="text-gray-600 mb-4">${job.description}</p>
-            <h3 class="text-lg font-medium mb-2">Kualifikasi</h3>
-            <ul class="list-disc list-inside text-gray-600 mb-4">
-                ${job.qualifications.map(qual => `<li>${qual}</li>`).join('')}
-            </ul>
-            <button class="w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600" onclick="applyForJob('${job.title}')">Lamar Sekarang</button>
+                    <div class="islamic-divider"></div>
+
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold text-[var(--primary-color)] mb-3">Deskripsi Pekerjaan</h3>
+                        <p class="text-gray-600">${job.description}</p>
+                    </div>
+
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold text-[var(--primary-color)] mb-3">Kualifikasi</h3>
+                        <ul class="list-none space-y-2">
+                            ${job.qualifications.map(qual => `
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-[var(--accent-color)] mt-1 mr-2"></i>
+                                    <span class="text-gray-600">${qual}</span>
+                                </li>
+                            `).join('')}
+                        </ul>
+                    </div>
+
+                    <button onclick="applyForJob('${job.title}')" class="islamic-button w-full">
+                        <i class="fas fa-paper-plane mr-2"></i>
+                        Lamar Sekarang
+                    </button>
+                </div>
+            </div>
         `;
-
-        return card;
     }
 
-    // Fungsi untuk melamar pekerjaan
     function applyForJob(jobTitle) {
-        alert(`Terima kasih! Anda telah melamar untuk posisi ${jobTitle}.`);
+        alert(`Anda akan melamar untuk posisi ${jobTitle}`);
+        // Add your application logic here
     }
 
     // Memasukkan semua pekerjaan ke dalam container
     const jobContainer = document.getElementById('jobContainer');
     jobList.forEach(job => {
         const jobCard = createJobCard(job);
-        jobContainer.appendChild(jobCard);
+        jobContainer.insertAdjacentHTML('beforeend', jobCard);
     });
 </script>
 

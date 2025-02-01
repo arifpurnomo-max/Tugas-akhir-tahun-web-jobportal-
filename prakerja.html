@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Program Pelatihan Prakerja - LulusanPesantren.id</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="css/islamic-theme.css" rel="stylesheet">
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .animate-slide-in {
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .gallery-img {
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-img:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="islamic-bg-main min-h-screen">
+
+<!-- Header -->
+<nav class="bg-white/95 fixed w-full shadow-sm z-50 animate-fade-in">
+    <div class="container mx-auto px-4">
+        <div class="flex justify-between items-center h-16">
+            <a href="index.html" class="text-xl font-bold text-primary">
+                <span class="text-[var(--primary-color)]">Lulusan</span>
+                <span class="text-[var(--accent-color)]">Pesantren.id</span>
+            </a>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center space-x-4">
+                <a href="index.html" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)]">Beranda</a>
+                <a href="lowongan.html" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)]">Lowongan</a>
+                <a href="perusahaan.html" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)]">Perusahaan</a>
+                <a href="prakerja.html" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)]">Prakerja</a>
+                <a href="login.html" class="islamic-button">Masuk</a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden" id="mobileMenuBtn">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="md:hidden hidden" id="mobileMenu">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="index.html" class="block text-[var(--primary-color)] hover:text-[var(--secondary-color)] py-2">Beranda</a>
+                <a href="lowongan.html" class="block text-[var(--primary-color)] hover:text-[var(--secondary-color)] py-2">Lowongan</a>
+                <a href="perusahaan.html" class="block text-[var(--primary-color)] hover:text-[var(--secondary-color)] py-2">Perusahaan</a>
+                <a href="prakerja.html" class="block text-[var(--primary-color)] hover:text-[var(--secondary-color)] py-2">Prakerja</a>
+                <a href="login.html" class="islamic-button block text-center">Masuk</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="islamic-bg-secondary py-32 md:py-40 animate-fade-in">
+    <div class="container mx-auto px-4">
+        <div class="islamic-header">
+            <h1 class="text-[var(--primary-color)] text-4xl md:text-5xl font-bold mb-4">Program Pelatihan Prakerja</h1>
+            <p class="text-[var(--secondary-color)] text-xl mb-8">Tingkatkan Keterampilan dan Kompetensi Anda dengan Bergabung dengan Pelatihan Kami!</p>
+        </div>
+    </div>
+</section>
+
+<!-- Program Pelatihan Section -->
+<section class="py-16 animate-slide-in">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Program 1 -->
+            <div class="islamic-card islamic-float">
+                <img src="https://via.placeholder.com/400x250" alt="Digital Marketing" class="w-full h-48 object-cover rounded-t-lg">
+                <div class="p-6">
+                    <h3 class="text-[var(--primary-color)] text-xl font-bold mb-2">Digital Marketing Specialist</h3>
+                    <p class="text-[var(--secondary-color)] mb-4">Durasi: 3 Bulan</p>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-[var(--accent-color)] mr-2"></i>
+                            <span>Sertifikat Resmi</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-[var(--accent-color)] mr-2"></i>
+                            <span>Mentor Berpengalaman</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-[var(--accent-color)] mr-2"></i>
+                            <span>Praktek Langsung</span>
+                        </li>
+                    </ul>
+                    <button class="islamic-button w-full">Daftar Sekarang</button>
+                </div>
+            </div>
+
+            <!-- Program 2 -->
+            <div class="islamic-card islamic-float">
+                <img src="https://via.placeholder.com/400x250" alt="Web Development" class="w-full h-48 object-cover rounded-t-lg">
+                <div class="p-6">
+                    <h3 class="text-[var(--primary-color)] text-xl font-bold mb-2">Web Development</h3>
+                    <p class="text-[var(--secondary-color)] mb-4">Durasi: 4 Bulan</p>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-[var(--accent-color)] mr-2"></i>
+                            <span>Project Portfolio</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-[var(--accent-color)] mr-2"></i>
+                            <span>Code Review</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-[var(--accent-color)] mr-2"></i>
+                            <span>Job Placement</span>
+                        </li>
+                    </ul>
+                    <button class="islamic-button w-full">Daftar Sekarang</button>
+                </div>
+            </div>
+
+            <!-- Program 3 -->
+            <div class="islamic-card islamic-float">
+                <img src="https://via.placeholder.com/400x250" alt="Data Analysis" class="w-full h-48 object-cover rounded-t-lg">
+                <div class="p-6">
+                    <h3 class="text-[var(--primary-color)] text-xl font-bold mb-2">Data Analysis</h3>
+                    <p class="text-[var(--secondary-color)] mb-4">Durasi: 3 Bulan</p>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-[var(--accent-color)] mr-2"></i>
+                            <span>Real Dataset</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-[var(--accent-color)] mr-2"></i>
+                            <span>Business Case Study</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-[var(--accent-color)] mr-2"></i>
+                            <span>Career Coaching</span>
+                        </li>
+                    </ul>
+                    <button class="islamic-button w-full">Daftar Sekarang</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Gallery Section -->
+<section class="py-16 islamic-bg-secondary">
+    <div class="container mx-auto px-4">
+        <div class="islamic-header mb-12">
+            <h2 class="text-[var(--primary-color)] text-3xl font-bold mb-4">Galeri Kegiatan</h2>
+            <div class="islamic-divider"></div>
+        </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            <!-- Gallery Items -->
+            <div class="islamic-card overflow-hidden">
+                <img src="https://via.placeholder.com/400x300" alt="Kegiatan 1" class="w-full h-64 object-cover gallery-img">
+            </div>
+            <div class="islamic-card overflow-hidden">
+                <img src="https://via.placeholder.com/400x300" alt="Kegiatan 2" class="w-full h-64 object-cover gallery-img">
+            </div>
+            <div class="islamic-card overflow-hidden">
+                <img src="https://via.placeholder.com/400x300" alt="Kegiatan 3" class="w-full h-64 object-cover gallery-img">
+            </div>
+            <div class="islamic-card overflow-hidden">
+                <img src="https://via.placeholder.com/400x300" alt="Kegiatan 4" class="w-full h-64 object-cover gallery-img">
+            </div>
+            <div class="islamic-card overflow-hidden">
+                <img src="https://via.placeholder.com/400x300" alt="Kegiatan 5" class="w-full h-64 object-cover gallery-img">
+            </div>
+            <div class="islamic-card overflow-hidden">
+                <img src="https://via.placeholder.com/400x300" alt="Kegiatan 6" class="w-full h-64 object-cover gallery-img">
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Mobile menu functionality
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    
+    mobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+});
+</script>
+
+</body>
+</html>

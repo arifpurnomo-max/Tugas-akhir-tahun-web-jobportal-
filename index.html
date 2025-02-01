@@ -3,19 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal Lowongan Kerja</title>
+    <title>Lulusan Pesantren.id</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="jobs.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="islamic-theme.css" rel="stylesheet">
     <style>
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         .animate-fade-in {
@@ -23,14 +20,8 @@
         }
 
         @keyframes slideIn {
-            from {
-                transform: translateX(-20px);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
+            from { transform: translateX(-20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
 
         .animate-slide-in {
@@ -38,27 +29,28 @@
         }
     </style>
 </head>
-<body class="bg-white">
+<body class="islamic-bg-main min-h-screen">
 
 <!-- Header -->
-<nav class="bg-white fixed w-full shadow-sm z-50 animate-fade-in">
+<nav class="bg-white/95 fixed w-full shadow-sm z-50 animate-fade-in">
     <div class="container mx-auto px-4">
         <div class="flex justify-between items-center h-16">
-            <a href="#" class="text-xl font-bold">JobPortal</a>
+            <a href="#" class="text-xl font-bold text-primary">
+                <span class="text-[var(--primary-color)]">Lulusan</span>
+                <span class="text-[var(--accent-color)]">Pesantren.id</span>
+            </a>
             
             <!-- Desktop Menu -->
-            <div class="hidden md:flex space-x-4">
-                <a href="index.html" class="text-gray-600 hover:text-gray-900">Beranda</a>
-                <a href="lowongan.html" class="text-gray-600 hover:text-gray-900">Lowongan</a>
-                <a href="perusahaan.html" class="text-gray-600 hover:text-gray-900">Perusahaan</a>
-                <a href="tips karir.html" class="text-gray-600 hover:text-gray-900">Tips Karir</a>
-                <a href="login.html" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">Masuk</a>
+            <div class="hidden md:flex items-center space-x-4">
+                <a href="index.html" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)]">Beranda</a>
+                <a href="lowongan.html" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)]">Lowongan</a>
+                <a href="perusahaan.html" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)]">Perusahaan</a>
+                <a href="prakerja.html" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)]">Pelatihan</a>
+                <a href="login.html" class="islamic-button">Masuk</a>
             </div>
 
-            
-
             <!-- Mobile Menu Button -->
-            <button class="md:hidden" id="mobileMenuBtn" aria-label="Toggle Mobile Menu">
+            <button class="md:hidden" id="mobileMenuBtn">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                 </svg>
@@ -68,47 +60,57 @@
         <!-- Mobile Menu -->
         <div class="md:hidden hidden" id="mobileMenu">
             <div class="px-2 pt-2 pb-3 space-y-1">
-                <a href="index.html" class="block text-gray-600 hover:text-gray-900 py-2">Beranda</a>
-                <a href="lowongan.html" class="block text-gray-600 hover:text-gray-900 py-2">Lowongan</a>
-                <a href="perusahaan.html" class="block text-gray-600 hover:text-gray-900 py-2">Perusahaan</a>
-                <a href="tips karir.html" class="block text-gray-600 hover:text-gray-900 py-2">Tips Karir</a>
-                <a href="login.html" class="block bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 text-center">Masuk</a>
+                <a href="index.html" class="block text-[var(--primary-color)] hover:text-[var(--secondary-color)] py-2">Beranda</a>
+                <a href="lowongan.html" class="block text-[var(--primary-color)] hover:text-[var(--secondary-color)] py-2">Lowongan</a>
+                <a href="perusahaan.html" class="block text-[var(--primary-color)] hover:text-[var(--secondary-color)] py-2">Perusahaan</a>
+                <a href="prakerja.html" class="block text-[var(--primary-color)] hover:text-[var(--secondary-color)] py-2">Pelatihan</a>
+                <a href="login.html" class="islamic-button block text-center">Masuk</a>
             </div>
         </div>
     </div>
 </nav>
 
 <!-- Hero Section -->
-<section class="bg-gray-100 text-white py-16 md:py-32 animate-fade-in">
+<section class="islamic-bg-secondary py-32 md:py-40 animate-fade-in">
     <div class="container mx-auto px-4">
-        <h1 class="text-black md:text-4xl font-bold text-center mb-8">Temukan Karir Impian Anda!</h1>
-        <div class="bg-white/95 p-4 md:p-6 rounded-lg shadow-lg max-w-4xl mx-auto">
+        <div class="islamic-header">
+            <h1 class="text-[var(--primary-color)] text-4xl md:text-5xl font-bold mb-4">Temukan Karir Impian Anda</h1>
+        </div>
+        
+        <div class="islamic-frame max-w-4xl mx-auto bg-white/95 p-8">
             <form id="searchForm" class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <input type="text" id="keyword" placeholder="Posisi atau Kata Kunci" class="p-2 border rounded-lg text-black">
-                <select id="location" class="p-2 border rounded-lg text-black">
+                <input type="text" id="keyword" placeholder="Posisi atau Kata Kunci" class="islamic-input">
+                <select id="location" class="islamic-input">
                     <option>Lokasi</option>
                     <option>Jakarta</option>
                     <option>Bandung</option>
                     <option>Surabaya</option>
                 </select>
-                <select id="jobType" class="p-2 border rounded-lg text-black">
+                <select id="jobType" class="islamic-input">
                     <option>Jenis Pekerjaan</option>
                     <option>Full-time</option>
                     <option>Part-time</option>
                     <option>Online</option>
                 </select>
-                <button type="submit" class="bg-green-500 text-white p-2 rounded-lg hover:bg-green-600">Cari</button>
+                <button type="submit" class="islamic-button">
+                    <i class="fas fa-search mr-2"></i>Cari
+                </button>
             </form>
         </div>
     </div>
 </section>
 
 <!-- Job Listings -->
-<section class="py-6 md:py-16 animate-slide-in">
+<section class="py-16 md:py-24 animate-slide-in">
     <div class="container mx-auto px-4">
-        <h2 class="text-xl md:text-2xl font-bold mb-4 md:mb-8">Lowongan Terbaru</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-6" id="jobList">
-            <!-- Job cards will be dynamically inserted here -->
+        <div class="islamic-header mb-8">
+            <h2 class="text-[var(--primary-color)] text-3xl font-bold">Lowongan Terbaru</h2>
+        </div>
+        
+        <div class="islamic-divider"></div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6" id="jobList">
+            
         </div>
     </div>
 </section>
@@ -142,56 +144,95 @@ class JobPortal {
     }
 
     loadJobs() {
-        this.jobs = [
-            {id: 1, title: "Guru Bahasa Arab", company: "Arabic Foundation", location: "Jakarta", salary: "Rp 3-5 juta", type: "Full-time" },
-            {id: 2, title: "Translator", company: "Translateaja!", location: "Bandung", salary: "Rp 8-10 juta", type: "Full-time" },
-            {id: 3, title: "Konsultan Syariah", company: "Consulting Group", location: "Jakarta", salary: "Rp 12-18 juta", type: "Full-time" },
-            {id: 4, title: "Motivator Islami", company: "Islamy Corp", location: "Surabaya", salary: "Rp 8-12 juta", type: "Part-time" },
-            {id: 5, title: "Qari", company: "Nahawand Group",location: "Jakarta", salary: "Rp 6-9 juta", type: "Part-time"},
-            {id: 6, title: "Designer Busana Muslim", company: "Innovation Boutique", location: "Bandung", salary: "Rp 4-6 juta", type: "Online"},
-            {id: 7, title: "Pemandu Wisata Religi", company: "Guide Solutions", location: "Jakarta", salary: "Rp 4-7 juta",type: "Full-time"},
-            {id: 8, title: "Guru Tahsin dan Tahfidz", company: "Abata Foundation", location: "Surabaya", salary: "Rp 3-4 juta", type: "Part-time"},
-            {id: 9, title: "Penulis dan Editor Konten Islami", company: "Nailul Project", location: "Jakarta", salary: "Rp 4-6 juta",type: "Online"}
-        ];
-        
-        this.renderJobs(this.jobs);
+        $.ajax({
+            url: 'jobs.php',
+            method: 'GET',
+            dataType: 'json',
+            success: (response) => {
+                this.jobs = response;
+                this.renderJobs(this.jobs);
+            },
+            error: (xhr, status, error) => {
+                console.error('Error fetching jobs:', error);
+                const jobList = document.getElementById('jobList');
+                jobList.innerHTML = `
+                    <div class="col-span-full text-center text-red-600">
+                        <p>Maaf, terjadi kesalahan saat memuat data lowongan. Silakan coba lagi nanti.</p>
+                    </div>
+                `;
+            }
+        });
     }
 
-    renderJobs(filteredJobs) {
+    filterAndRenderJobs(keyword, location, jobType) {
+        $.ajax({
+            url: 'jobs.php',
+            method: 'GET',
+            dataType: 'json',
+            data: {
+                keyword: keyword || '',
+                location: location === 'Lokasi' ? '' : location,
+                jobType: jobType === 'Jenis Pekerjaan' ? '' : jobType
+            },
+            success: (response) => {
+                this.renderJobs(response);
+            },
+            error: (xhr, status, error) => {
+                console.error('Error filtering jobs:', error);
+                const jobList = document.getElementById('jobList');
+                jobList.innerHTML = `
+                    <div class="col-span-full text-center text-red-600">
+                        <p>Maaf, terjadi kesalahan saat memfilter data. Silakan coba lagi nanti.</p>
+                    </div>
+                `;
+            }
+        });
+    }
+
+    renderJobs(jobs) {
         const jobList = document.getElementById('jobList');
         jobList.innerHTML = '';
 
-        filteredJobs.forEach(job => {
+        if (jobs.length === 0) {
+            jobList.innerHTML = `
+                <div class="col-span-full text-center text-gray-600">
+                    <p>Tidak ada lowongan yang sesuai dengan kriteria pencarian.</p>
+                </div>
+            `;
+            return;
+        }
+
+        jobs.forEach(job => {
             const jobCard = `
-                <div class="bg-white rounded-lg shadow-md hover:-translate-y-1 transition-transform duration-300 relative animate-fade-in">
-                    <div class="p-4 md:p-6">
-                        <h5 class="text-lg md:text-xl font-bold mb-2">${job.title}</h5>
-                        <h6 class="text-gray-600 mb-4">${job.company}</h6>
-                        <p class="text-gray-700 space-y-2">
-                            <div><i class="fas fa-map-marker-alt"></i> ${job.location}</div>
-                            <div><i class="fas fa-money-bill"></i> ${job.salary}</div>
-                            <div><i class="fas fa-clock"></i> ${job.type}</div>
-                        </p>
-                        <a href="lowongan.html" "id=${job.id}" 
-                           class="mt-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 w-full md:w-auto inline-block text-center">
-                            Lihat Detail
-                        </a>
+                <div class="islamic-card islamic-float">
+                    <div class="relative">
+                        <h5 class="text-[var(--primary-color)] text-xl font-bold mb-2">${job.title}</h5>
+                        <h6 class="text-[var(--secondary-color)] mb-4">${job.company}</h6>
+                        <div class="space-y-3 text-gray-600">
+                            <div class="flex items-center">
+                                <i class="fas fa-map-marker-alt w-6 text-[var(--accent-color)]"></i>
+                                <span>${job.location}</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-money-bill w-6 text-[var(--accent-color)]"></i>
+                                <span>${job.salary}</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-clock w-6 text-[var(--accent-color)]"></i>
+                                <span>${job.type}</span>
+                            </div>
+                        </div>
+                        <div class="mt-6">
+                            <a href="lowongan.html?id=${job.id}" 
+                               class="islamic-button w-full text-center inline-block">
+                                <i class="fas fa-eye mr-2"></i>Lihat Detail
+                            </a>
+                        </div>
                     </div>
                 </div>
             `;
             jobList.insertAdjacentHTML('beforeend', jobCard);
         });
-    }
-    filterAndRenderJobs(keyword, location, jobType) {
-        const filteredJobs = this.jobs.filter(job => {
-            return (
-                (!keyword || job.title.toLowerCase().includes(keyword.toLowerCase())) &&
-                (location === 'Lokasi' || job.location === location) &&
-                (jobType === 'Jenis Pekerjaan' || job.type === jobType)
-            );
-        });
-
-        this.renderJobs(filteredJobs);
     }
 }
 
