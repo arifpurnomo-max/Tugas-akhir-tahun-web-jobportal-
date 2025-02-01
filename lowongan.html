@@ -225,9 +225,18 @@
         `;
     }
 
+    //  fungsi applyForJob yang akan menyimpan data pekerjaan ke local storage.
     function applyForJob(jobTitle) {
-        alert(`Anda akan melamar untuk posisi ${jobTitle}`);
-        // Add your application logic here
+        // Ambil data pekerjaan dari local storage atau buat array baru jika belum ada
+        let namaPekerjaan = JSON.parse(localStorage.getItem('namaPekerjaan')) || [];
+
+        // Tambahkan pekerjaan baru ke array
+        namaPekerjaan.push(jobTitle);
+
+        // Simpan kembali array ke local storage
+        localStorage.setItem('namaPekerjaan', JSON.stringify(namaPekerjaan));
+
+        alert('Anda telah melamar pekerjaan: ' + jobTitle);
     }
 
     // Memasukkan semua pekerjaan ke dalam container
