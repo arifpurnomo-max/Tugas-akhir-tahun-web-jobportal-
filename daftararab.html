@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Pelatihan Bahasa Arab</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="islamic-theme.css" rel="stylesheet">
+    <style>
+        @keyframes slideIn {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .animate-slide-in {
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .history-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+            z-index: 40;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .history-panel {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            max-width: 500px;
+            height: 100%;
+            background-color: white;
+            z-index: 50;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .history-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .history-panel.active {
+            transform: translateX(0);
+        }
+
+        .history-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .history-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+
+        .history-item {
+            background-color: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            transition: transform 0.2s ease;
+        }
+
+        .history-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .arabesque-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230D4B3E' fill-opacity='0.05'%3E%3Cpath d='M0 0h40v40H0V0zm40 40h40v40H40V40zm0-40h2l-2 2V0zm0 4l4-4h2l-6 6V4zm0 4l8-8h2L40 10V8zm0 4L52 0h2L40 14v-2zm0 4L56 0h2L40 18v-2zm0 4L60 0h2L40 22v-2zm0 4L64 0h2L40 26v-2zm0 4L68 0h2L40 30v-2zm0 4L72 0h2L40 34v-2zm0 4L76 0h2L40 38v-2zm0 4L80 0v2L42 40h-2zm4 0L80 4v2L46 40h-2zm4 0L80 8v2L50 40h-2zm4 0l28-28v2L54 40h-2zm4 0l24-24v2L58 40h-2zm4 0l20-20v2L62 40h-2zm4 0l16-16v2L66 40h-2zm4 0l12-12v2L70 40h-2zm4 0l8-8v2l-6 6h-2zm4 0l4-4v2l-2 2h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body class="islamic-bg-main min-h-screen flex items-center justify-center p-4 relative">
+    <div class="arabesque-pattern"></div>
+    
+    <div class="container mx-auto px-4 relative z-10">
+        <a href="index.html" class="islamic-button inline-flex items-center mb-4">
+            <i class="fas fa-home mr-2"></i>
+            Kembali ke Beranda
+        </a>
+        <div class="islamic-card islamic-frame max-w-md mx-auto animate-slide-in">
+            <div class="islamic-header mb-6">
+                <h2 class="text-[var(--primary-color)] text-3xl font-bold">Pendaftaran Pelatihan Bahasa Arab</h2>
+                <p class="text-[var(--secondary-color)] mt-2">Durasi: 1 Bulan</p>
+            </div>
+
+            <form id="trainingForm" class="space-y-6">
+                <div>
+                    <label for="nama" class="block text-[var(--primary-color)] mb-2">
+                        <i class="fas fa-user text-[var(--accent-color)] mr-2"></i>Nama Lengkap
+                    </label>
+                    <input type="text" id="nama" class="islamic-input w-full" required>
+                </div>
+
+                <div>
+                    <label for="email" class="block text-[var(--primary-color)] mb-2">
+                        <i class="fas fa-envelope text-[var(--accent-color)] mr-2"></i>Email
+                    </label>
+                    <input type="email" id="email" class="islamic-input w-full" required>
+                </div>
+
+                <div>
+                    <label for="telepon" class="block text-[var(--primary-color)] mb-2">
+                        <i class="fas fa-phone text-[var(--accent-color)] mr-2"></i>Nomor Telepon
+                    </label>
+                    <input type="tel" id="telepon" class="islamic-input w-full" required>
+                </div>
+
+                <div>
+                    <label for="level" class="block text-[var(--primary-color)] mb-2">
+                        <i class="fas fa-layer-group text-[var(--accent-color)] mr-2"></i>Level Bahasa Arab
+                    </label>
+                    <select id="level" class="islamic-input w-full" required>
+                        <option value="">Pilih Level</option>
+                        <option value="pemula">Pemula</option>
+                        <option value="menengah">Menengah</option>
+                        <option value="mahir">Mahir</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="jadwal" class="block text-[var(--primary-color)] mb-2">
+                        <i class="fas fa-calendar-alt text-[var(--accent-color)] mr-2"></i>Pilih Jadwal
+                    </label>
+                    <select id="jadwal" class="islamic-input w-full" required>
+                        <option value="">Pilih Jadwal</option>
+                        <option value="pagi">Pagi (08.00 - 10.00)</option>
+                        <option value="siang">Siang (13.00 - 15.00)</option>
+                        <option value="sore">Sore (16.00 - 18.00)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-[var(--primary-color)] mb-2">
+                        <i class="fas fa-book text-[var(--accent-color)] mr-2"></i>Tujuan Belajar
+                    </label>
+                    <div class="space-y-2">
+                        <label class="flex items-center">
+                            <input type="checkbox" name="tujuan" value="akademik" class="mr-2">
+                            <span>Akademik</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" name="tujuan" value="bisnis" class="mr-2">
+                            <span>Bisnis</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" name="tujuan" value="agama" class="mr-2">
+                            <span>Pemahaman Agama</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="islamic-button w-full flex items-center justify-center">
+                    <i class="fas fa-paper-plane mr-2"></i>Kirim Pendaftaran
+                </button>
+
+                <div class="islamic-divider"></div>
+
+                <div class="text-center text-[var(--secondary-color)] text-sm">
+                    <p><i class="fas fa-info-circle mr-1"></i>Setelah mendaftar, kami akan menghubungi Anda untuk konfirmasi jadwal dan pembayaran</p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        class FormManager {
+            constructor() {
+                this.form = document.getElementById('trainingForm');
+                this.formInputs = this.form.querySelectorAll('input, select');
+                this.storageKey = 'trainingFormData';
+                this.sessionId = this.generateSessionId();
+                
+                this.initializeEventListeners();
+                this.initializeStorage();
+                this.loadFormData();
+                this.updateFormStatus();
+            }
+
+            generateSessionId() {
+                return 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            }
+
+            initializeStorage() {
+                const storage = localStorage.getItem(this.storageKey);
+                if (!storage) {
+                    const initialData = {
+                        currentSession: this.sessionId,
+                        sessions: {},
+                        submissions: [],
+                        lastUpdated: new Date().toISOString(),
+                        formStats: {
+                            totalVisits: 0,
+                            totalSubmissions: 0,
+                            lastVisit: new Date().toISOString()
+                        }
+                    };
+                    localStorage.setItem(this.storageKey, JSON.stringify(initialData));
+                } else {
+                    // Update stats for new visit
+                    const data = JSON.parse(storage);
+                    data.formStats.totalVisits++;
+                    data.formStats.lastVisit = new Date().toISOString();
+                    data.currentSession = this.sessionId;
+                    localStorage.setItem(this.storageKey, JSON.stringify(data));
+                }
+            }
+
+            initializeEventListeners() {
+                // Track field interactions
+                this.formInputs.forEach(input => {
+                    input.addEventListener('input', () => this.saveFormData());
+                    input.addEventListener('change', () => this.saveFormData());
+                    input.addEventListener('focus', (e) => this.trackFieldInteraction(e.target.id, 'focus'));
+                    input.addEventListener('blur', (e) => this.trackFieldInteraction(e.target.id, 'blur'));
+                });
+
+                // Handle form submission
+                this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+
+                // Add form management buttons
+                const buttonContainer = document.createElement('div');
+                buttonContainer.className = 'space-y-4 mt-4';
+                
+                const clearButton = document.createElement('button');
+                clearButton.type = 'button';
+                clearButton.className = 'islamic-button w-full flex items-center justify-center';
+                clearButton.innerHTML = '<i class="fas fa-eraser mr-2"></i>Bersihkan Form';
+                clearButton.addEventListener('click', () => this.clearForm());
+
+                const showHistoryButton = document.createElement('button');
+                showHistoryButton.type = 'button';
+                showHistoryButton.className = 'islamic-button w-full flex items-center justify-center';
+                showHistoryButton.innerHTML = '<i class="fas fa-history mr-2"></i>Lihat Riwayat';
+                showHistoryButton.addEventListener('click', () => this.showHistory());
+                
+                buttonContainer.appendChild(clearButton);
+                buttonContainer.appendChild(showHistoryButton);
+                this.form.appendChild(buttonContainer);
+            }
+
+            trackFieldInteraction(fieldId, action) {
+                const storage = JSON.parse(localStorage.getItem(this.storageKey));
+                if (!storage.sessions[this.sessionId]) {
+                    storage.sessions[this.sessionId] = {
+                        startTime: new Date().toISOString(),
+                        fieldInteractions: {},
+                        formCompletion: 0
+                    };
+                }
+
+                if (!storage.sessions[this.sessionId].fieldInteractions[fieldId]) {
+                    storage.sessions[this.sessionId].fieldInteractions[fieldId] = {
+                        focusCount: 0,
+                        timeSpent: 0,
+                        lastFocus: null
+                    };
+                }
+
+                const field = storage.sessions[this.sessionId].fieldInteractions[fieldId];
+                
+                if (action === 'focus') {
+                    field.focusCount++;
+                    field.lastFocus = new Date().toISOString();
+                } else if (action === 'blur' && field.lastFocus) {
+                    const timeSpent = new Date() - new Date(field.lastFocus);
+                    field.timeSpent += timeSpent;
+                }
+
+                localStorage.setItem(this.storageKey, JSON.stringify(storage));
+            }
+
+            updateFormStatus() {
+                const requiredFields = Array.from(this.formInputs).filter(input => input.required);
+                const filledFields = requiredFields.filter(field => field.value.trim() !== '');
+                const completion = (filledFields.length / requiredFields.length) * 100;
+
+                const storage = JSON.parse(localStorage.getItem(this.storageKey));
+                if (storage.sessions[this.sessionId]) {
+                    storage.sessions[this.sessionId].formCompletion = completion;
+                    localStorage.setItem(this.storageKey, JSON.stringify(storage));
+                }
+
+                return completion;
+            }
+
+            saveFormData() {
+                const storage = JSON.parse(localStorage.getItem(this.storageKey));
+                
+                const formData = {
+                    nama: document.getElementById('nama').value,
+                    email: document.getElementById('email').value,
+                    telepon: document.getElementById('telepon').value,
+                    level: document.getElementById('level').value,
+                    jadwal: document.getElementById('jadwal').value,
+                    tujuan: Array.from(document.querySelectorAll('input[name="tujuan"]:checked'))
+                        .map(checkbox => checkbox.value)
+                };
+
+                storage.sessions[this.sessionId].formData = formData;
+                storage.sessions[this.sessionId].lastModified = new Date().toISOString();
+                storage.lastUpdated = new Date().toISOString();
+
+                this.updateFormStatus();
+                localStorage.setItem(this.storageKey, JSON.stringify(storage));
+                this.showSaveIndicator();
+            }
+
+            loadFormData() {
+                const storage = JSON.parse(localStorage.getItem(this.storageKey));
+                const currentSessionData = storage.sessions[this.sessionId]?.formData;
+                
+                if (currentSessionData) {
+                    // Restore text inputs and selects
+                    Object.keys(currentSessionData).forEach(key => {
+                        const element = document.getElementById(key);
+                        if (element && element.type !== 'checkbox') {
+                            element.value = currentSessionData[key];
+                        }
+                    });
+
+                    // Restore checkboxes
+                    const checkboxes = document.querySelectorAll('input[name="tujuan"]');
+                    checkboxes.forEach(checkbox => {
+                        checkbox.checked = currentSessionData.tujuan.includes(checkbox.value);
+                    });
+                }
+            }
+
+            clearForm() {
+                if (confirm('Apakah Anda yakin ingin menghapus semua data form?')) {
+                    const storage = JSON.parse(localStorage.getItem(this.storageKey));
+                    delete storage.sessions[this.sessionId];
+                    localStorage.setItem(this.storageKey, JSON.stringify(storage));
+                    this.form.reset();
+                    this.showNotification('Form telah dibersihkan', 'warning');
+                }
+            }
+
+            handleSubmit(e) {
+                e.preventDefault();
+                
+                const formData = {
+                    nama: document.getElementById('nama').value,
+                    email: document.getElementById('email').value,
+                    telepon: document.getElementById('telepon').value,
+                    level: document.getElementById('level').value,
+                    jadwal: document.getElementById('jadwal').value,
+                    tujuan: Array.from(document.querySelectorAll('input[name="tujuan"]:checked'))
+                        .map(checkbox => checkbox.value)
+                };
+
+                const storage = JSON.parse(localStorage.getItem(this.storageKey));
+                
+                // Add submission to history
+                const submission = {
+                    id: Date.now(),
+                    timestamp: new Date().toISOString(),
+                    sessionId: this.sessionId,
+                    formData: formData,
+                    formCompletion: this.updateFormStatus(),
+                    timeSpent: this.calculateSessionTime(storage.sessions[this.sessionId])
+                };
+
+                storage.submissions.push(submission);
+                storage.formStats.totalSubmissions++;
+                
+                // Store submission and clear current session
+                localStorage.setItem(this.storageKey, JSON.stringify(storage));
+                this.showNotification('Terima kasih telah mendaftar! Kami akan segera menghubungi Anda.', 'success');
+                this.form.reset();
+                
+                // Start new session
+                this.sessionId = this.generateSessionId();
+                this.initializeStorage();
+            }
+
+            calculateSessionTime(session) {
+                if (!session || !session.startTime) return 0;
+                return new Date() - new Date(session.startTime);
+            }
+
+            showHistory() {
+                const storage = JSON.parse(localStorage.getItem(this.storageKey));
+                const submissions = storage.submissions;
+                
+                if (submissions.length === 0) {
+                    this.showNotification('Belum ada riwayat pendaftaran', 'info');
+                    return;
+                }
+
+                // Create overlay and panel
+                const historyHTML = `
+                    <div class="history-overlay">
+                        <div class="history-panel">
+                            <div class="history-header">
+                                <h2 class="text-xl font-bold">Riwayat Pendaftaran</h2>
+                                <button class="text-white hover:text-gray-200 focus:outline-none" id="closeHistory">
+                                    <i class="fas fa-times text-xl"></i>
+                                </button>
+                            </div>
+                            <div class="history-content">
+                                ${submissions.map(sub => `
+                                    <div class="history-item">
+                                        <div class="font-bold text-[var(--primary-color)]">${sub.formData.nama}</div>
+                                        <div class="text-sm text-gray-600 space-y-1 mt-2">
+                                            <div class="flex items-center">
+                                                <i class="fas fa-envelope w-5 text-[var(--accent-color)]"></i>
+                                                <span>${sub.formData.email}</span>
+                                            </div>
+                                            <div class="flex items-center">
+                                                <i class="fas fa-layer-group w-5 text-[var(--accent-color)]"></i>
+                                                <span>${sub.formData.level}</span>
+                                            </div>
+                                            <div class="flex items-center">
+                                                <i class="fas fa-clock w-5 text-[var(--accent-color)]"></i>
+                                                <span>${sub.formData.jadwal}</span>
+                                            </div>
+                                            <div class="flex items-center">
+                                                <i class="fas fa-bullseye w-5 text-[var(--accent-color)]"></i>
+                                                <span>${sub.formData.tujuan.join(', ')}</span>
+                                            </div>
+                                            <div class="flex items-center">
+                                                <i class="fas fa-calendar w-5 text-[var(--accent-color)]"></i>
+                                                <span>${new Date(sub.timestamp).toLocaleString()}</span>
+                                            </div>
+                                            <div class="flex items-center">
+                                                <i class="fas fa-stopwatch w-5 text-[var(--accent-color)]"></i>
+                                                <span>Waktu Pengisian: ${Math.round(sub.timeSpent / 1000)} detik</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                const historyElement = document.createElement('div');
+                historyElement.innerHTML = historyHTML;
+                document.body.appendChild(historyElement.firstElementChild);
+
+                // Add animation classes after a small delay
+                setTimeout(() => {
+                    document.querySelector('.history-overlay').classList.add('active');
+                    document.querySelector('.history-panel').classList.add('active');
+                }, 50);
+
+                // Handle close button
+                document.getElementById('closeHistory').addEventListener('click', () => {
+                    const overlay = document.querySelector('.history-overlay');
+                    const panel = document.querySelector('.history-panel');
+                    
+                    panel.style.transform = 'translateX(100%)';
+                    overlay.style.opacity = '0';
+                    
+                    setTimeout(() => {
+                        overlay.remove();
+                    }, 300);
+                });
+
+                // Close on overlay click
+                document.querySelector('.history-overlay').addEventListener('click', (e) => {
+                    if (e.target.classList.contains('history-overlay')) {
+                        document.getElementById('closeHistory').click();
+                    }
+                });
+            }
+
+            showSaveIndicator() {
+                const indicator = document.getElementById('saveIndicator') || document.createElement('div');
+                indicator.id = 'saveIndicator';
+                indicator.className = 'fixed bottom-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg opacity-0 transition-opacity duration-500';
+                indicator.textContent = 'Data tersimpan';
+                
+                if (!document.getElementById('saveIndicator')) {
+                    document.body.appendChild(indicator);
+                }
+
+                setTimeout(() => indicator.style.opacity = '1', 100);
+                setTimeout(() => indicator.style.opacity = '0', 2000);
+            }
+
+            showNotification(message, type = 'info') {
+                const colors = {
+                    success: 'bg-green-500',
+                    warning: 'bg-yellow-500',
+                    error: 'bg-red-500',
+                    info: 'bg-blue-500'
+                };
+
+                const notification = document.createElement('div');
+                notification.className = `fixed top-4 right-4 ${colors[type]} text-white px-6 py-3 rounded-lg shadow-lg transition-opacity duration-500 opacity-0`;
+                notification.textContent = message;
+                
+                document.body.appendChild(notification);
+                setTimeout(() => notification.style.opacity = '1', 100);
+                setTimeout(() => {
+                    notification.style.opacity = '0';
+                    setTimeout(() => notification.remove(), 500);
+                }, 3000);
+            }
+        }
+
+        // Initialize form manager
+        const formManager = new FormManager();
+    </script>
+</body>
+</html>
