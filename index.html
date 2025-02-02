@@ -50,6 +50,7 @@
             </div>
 
             <!-- Mobile Menu Button -->
+             <!-- Mobile Menu Button md:hidden menyembunyikan menu mobile pada layar besar. -->
             <button class="md:hidden" id="mobileMenuBtn">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
@@ -118,11 +119,12 @@
 <script>
 class JobPortal {
     constructor() {
-        this.jobs = [];
+        this.jobs = []; // All jobs data
         this.init();
         this.initMobileMenu();
     }
 
+    // Mengelola toggle (tampilkan/sembunyikan) navigasi menu pada perangkat mobile.
     initMobileMenu() {
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const mobileMenu = document.getElementById('mobileMenu');
@@ -132,6 +134,7 @@ class JobPortal {
         });
     }
 
+    // init(): Menginisialisasi data pekerjaan dan pencarian.
     init() {
         this.loadJobs();
         document.getElementById('searchForm').addEventListener('submit', (e) => {
@@ -143,6 +146,7 @@ class JobPortal {
         });
     }
 
+    // loadJobs(): Memuat data pekerjaan dari server dan merender data tersebut ke dalam halaman web (HTML) menggunakan renderJobs() method yang ada di dalam class ini (JobPortal) juga untuk menampilkan pesan error jika terjadi kesalahan saat memuat data pekerjaan dari server.
     loadJobs() {
         $.ajax({
             url: 'jobs.php',
@@ -164,6 +168,7 @@ class JobPortal {
         });
     }
 
+    // filterAndRenderJobs(keyword, location, jobType): Memfilter data pekerjaan berdasarkan kata kunci, lokasi, dan jenis pekerjaan yang diinputkan oleh pengguna. Setelah data pekerjaan difilter, data tersebut akan dirender ke dalam halaman web (HTML) menggunakan renderJobs() method yang ada di dalam class ini (JobPortal) juga untuk menampilkan pesan error jika terjadi kesalahan saat memfilter data pekerjaan.
     filterAndRenderJobs(keyword, location, jobType) {
         $.ajax({
             url: 'jobs.php',

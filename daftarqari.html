@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,6 +14,7 @@
                 transform: translateY(-20px);
                 opacity: 0;
             }
+
             to {
                 transform: translateY(0);
                 opacity: 1;
@@ -23,6 +25,7 @@
             from {
                 transform: translateX(100%);
             }
+
             to {
                 transform: translateX(0);
             }
@@ -32,6 +35,7 @@
             from {
                 opacity: 0;
             }
+
             to {
                 opacity: 1;
             }
@@ -120,9 +124,10 @@
         }
     </style>
 </head>
+
 <body class="islamic-bg-main min-h-screen flex items-center justify-center p-4 relative">
     <div class="arabesque-pattern"></div>
-    
+
     <div class="container mx-auto px-4 relative z-10">
         <a href="index.html" class="islamic-button inline-flex items-center mb-4">
             <i class="fas fa-home mr-2"></i>
@@ -180,7 +185,7 @@
                     </select>
                 </div>
 
-                
+
 
                 <button type="submit" class="islamic-button w-full flex items-center justify-center">
                     <i class="fas fa-paper-plane mr-2"></i>Kirim Pendaftaran
@@ -189,7 +194,8 @@
                 <div class="islamic-divider"></div>
 
                 <div class="text-center text-[var(--secondary-color)] text-sm">
-                    <p><i class="fas fa-info-circle mr-1"></i>Setelah mendaftar, kami akan menghubungi Anda untuk konfirmasi jadwal dan pembayaran</p>
+                    <p><i class="fas fa-info-circle mr-1"></i>Setelah mendaftar, kami akan menghubungi Anda untuk
+                        konfirmasi jadwal dan pembayaran</p>
                 </div>
             </form>
         </div>
@@ -202,7 +208,7 @@
                 this.formInputs = this.form.querySelectorAll('input, select');
                 this.storageKey = 'trainingFormData';
                 this.sessionId = this.generateSessionId();
-                
+
                 this.initializeEventListeners();
                 this.initializeStorage();
                 this.loadFormData();
@@ -253,7 +259,7 @@
                 // Add form management buttons
                 const buttonContainer = document.createElement('div');
                 buttonContainer.className = 'space-y-4 mt-4';
-                
+
                 const clearButton = document.createElement('button');
                 clearButton.type = 'button';
                 clearButton.className = 'islamic-button w-full flex items-center justify-center';
@@ -265,7 +271,7 @@
                 showHistoryButton.className = 'islamic-button w-full flex items-center justify-center';
                 showHistoryButton.innerHTML = '<i class="fas fa-history mr-2"></i>Lihat Riwayat';
                 showHistoryButton.addEventListener('click', () => this.showHistory());
-                
+
                 buttonContainer.appendChild(clearButton);
                 buttonContainer.appendChild(showHistoryButton);
                 this.form.appendChild(buttonContainer);
@@ -290,7 +296,7 @@
                 }
 
                 const field = storage.sessions[this.sessionId].fieldInteractions[fieldId];
-                
+
                 if (action === 'focus') {
                     field.focusCount++;
                     field.lastFocus = new Date().toISOString();
@@ -318,7 +324,7 @@
 
             saveFormData() {
                 const storage = JSON.parse(localStorage.getItem(this.storageKey));
-                
+
                 const formData = {
                     nama: document.getElementById('nama').value,
                     email: document.getElementById('email').value,
@@ -341,7 +347,7 @@
             loadFormData() {
                 const storage = JSON.parse(localStorage.getItem(this.storageKey));
                 const currentSessionData = storage.sessions[this.sessionId]?.formData;
-                
+
                 if (currentSessionData) {
                     // Restore text inputs and selects
                     Object.keys(currentSessionData).forEach(key => {
@@ -371,7 +377,7 @@
 
             handleSubmit(e) {
                 e.preventDefault();
-                
+
                 const formData = {
                     nama: document.getElementById('nama').value,
                     email: document.getElementById('email').value,
@@ -383,7 +389,7 @@
                 };
 
                 const storage = JSON.parse(localStorage.getItem(this.storageKey));
-                
+
                 // Add submission to history
                 const submission = {
                     id: Date.now(),
@@ -396,12 +402,12 @@
 
                 storage.submissions.push(submission);
                 storage.formStats.totalSubmissions++;
-                
+
                 // Store submission and clear current session
                 localStorage.setItem(this.storageKey, JSON.stringify(storage));
                 this.showNotification('Terima kasih telah mendaftar! Kami akan segera menghubungi Anda.', 'success');
                 this.form.reset();
-                
+
                 // Start new session
                 this.sessionId = this.generateSessionId();
                 this.initializeStorage();
@@ -415,7 +421,7 @@
             showHistory() {
                 const storage = JSON.parse(localStorage.getItem(this.storageKey));
                 const submissions = storage.submissions;
-                
+
                 if (submissions.length === 0) {
                     this.showNotification('Belum ada riwayat pendaftaran', 'info');
                     return;
@@ -482,10 +488,10 @@
                 document.getElementById('closeHistory').addEventListener('click', () => {
                     const overlay = document.querySelector('.history-overlay');
                     const panel = document.querySelector('.history-panel');
-                    
+
                     panel.style.transform = 'translateX(100%)';
                     overlay.style.opacity = '0';
-                    
+
                     setTimeout(() => {
                         overlay.remove();
                     }, 300);
@@ -504,7 +510,7 @@
                 indicator.id = 'saveIndicator';
                 indicator.className = 'fixed bottom-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg opacity-0 transition-opacity duration-500';
                 indicator.textContent = 'Data tersimpan';
-                
+
                 if (!document.getElementById('saveIndicator')) {
                     document.body.appendChild(indicator);
                 }
@@ -524,7 +530,7 @@
                 const notification = document.createElement('div');
                 notification.className = `fixed top-4 right-4 ${colors[type]} text-white px-6 py-3 rounded-lg shadow-lg transition-opacity duration-500 opacity-0`;
                 notification.textContent = message;
-                
+
                 document.body.appendChild(notification);
                 setTimeout(() => notification.style.opacity = '1', 100);
                 setTimeout(() => {
@@ -538,4 +544,5 @@
         const formManager = new FormManager();
     </script>
 </body>
+
 </html>
