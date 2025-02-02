@@ -145,7 +145,7 @@ class JobPortal {
 
     loadJobs() {
         $.ajax({
-            url: 'jobs.php',
+            url: 'jobs.js',
             method: 'GET',
             dataType: 'json',
             success: (response) => {
@@ -166,7 +166,7 @@ class JobPortal {
 
     filterAndRenderJobs(keyword, location, jobType) {
         $.ajax({
-            url: 'jobs.php',
+            url: 'jobs.js',
             method: 'GET',
             dataType: 'json',
             data: {
