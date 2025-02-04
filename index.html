@@ -149,7 +149,7 @@ class JobPortal {
     // loadJobs(): Memuat data pekerjaan dari server dan merender data tersebut ke dalam halaman web (HTML) menggunakan renderJobs() method yang ada di dalam class ini (JobPortal) juga untuk menampilkan pesan error jika terjadi kesalahan saat memuat data pekerjaan dari server.
     loadJobs() {
         $.ajax({
-            url: 'jobs.php',
+            url: 'jobs.js',
             method: 'GET',
             dataType: 'json',
             success: (response) => {
@@ -171,7 +171,7 @@ class JobPortal {
     // filterAndRenderJobs(keyword, location, jobType): Memfilter data pekerjaan berdasarkan kata kunci, lokasi, dan jenis pekerjaan yang diinputkan oleh pengguna. Setelah data pekerjaan difilter, data tersebut akan dirender ke dalam halaman web (HTML) menggunakan renderJobs() method yang ada di dalam class ini (JobPortal) juga untuk menampilkan pesan error jika terjadi kesalahan saat memfilter data pekerjaan.
     filterAndRenderJobs(keyword, location, jobType) {
         $.ajax({
-            url: 'jobs.php',
+            url: 'jobs.js',
             method: 'GET',
             dataType: 'json',
             data: {
